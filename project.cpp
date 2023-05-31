@@ -55,15 +55,16 @@ void ve_movie(Ve *&a,Ve *&b, Ve *&d, char P1[][cot], char P2[][cot], char P3[][c
         else
             cout<<"Vuot qua so lan gioi han la 4, moi nhap lai: ";
     }
+    system("cls");
         int dem=0;
         int dem1=0;
         int dem2=0;
         char movie;
     for(int i=0;i<choose;i++)
     {
-        cout<<"Ve thu "<<i+1<<endl<<"---------------------------------"<<endl;
+        cout<<"Ve thu "<<i+1<<endl<<"---------------------------------"<<endl<<endl;
         cout<<"Ten phim: "<<endl;
-        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl<<endl;
         cout<<"| 1.Conan    2. Doremon      3. Shin        |"<<endl;
         cout<<"---------------------------------------------"<<endl;
         cout<<"Choose: "; 
@@ -376,7 +377,7 @@ void ve_movie(Ve *&a,Ve *&b, Ve *&d, char P1[][cot], char P2[][cot], char P3[][c
 }
 
 
-void randomID(Ve &a, char ve)
+void randomID(Ve &a, char ve, char movie)
 {
     srand(time(NULL));
     const char*alpha="asdfghjklpoiuytrewqzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM0123456789";
@@ -385,28 +386,87 @@ void randomID(Ve &a, char ve)
     string id2;
     string id1;
     string id;
+    switch(movie)
+    {
+        case '1':
         if(ve == '1')
         {
-            id1="VI";
+            id1="V";
+            id1.push_back(movie);
             for(int i=0;i<size;i++)
             {
                 int index= rand() %len;
-                id2[i]+=alpha[index];
+                id2+=alpha[index];
             }
-            id=id1+" "+id2;
+            id=id1+""+id2;
         }
         else if(ve == '2')
         {
-            id1="NO";
+            id1="N";
+            id1.push_back(movie);
             for(int i=0;i<size;i++)
             {
                 int index= rand() %len;
-                id2[i]+=alpha[index];
+                id2+=alpha[index];
             }
-            id=id1+" "+id2;
+            id=id1+""+id2;
         }
-    a.maVe=id;
-    cout<<"Ma ve: " << a.maVe<<endl;
+        a.maVe=id;
+        cout<<"Ma ve: " << a.maVe<<endl;
+        break;
+        case '2':
+        if(ve == '1')
+        {
+            id1="V";
+            id1.push_back(movie);
+            for(int i=0;i<size;i++)
+            {
+                int index= rand() %len;
+                id2+=alpha[index];
+            }
+            id=id1+""+id2;
+        }
+        else if(ve == '2')
+        {
+            id1="N";
+            id1.push_back(movie);
+            for(int i=0;i<size;i++)
+            {
+                int index= rand() %len;
+                id2+=alpha[index];
+            }
+            id=id1+""+id2;
+        }
+        a.maVe=id;
+        cout<<"Ma ve: " << a.maVe<<endl;
+        break;
+        case '3':
+        if(ve == '1')
+        {
+            id1="V";
+            id1.push_back(movie);
+            for(int i=0;i<size;i++)
+            {
+                int index= rand() %len;
+                id2+=alpha[index];
+            }
+            id=id1+""+id2;
+        }
+        else if(ve == '2')
+        {
+            id1="N";
+            id1.push_back(movie);
+            for(int i=0;i<size;i++)
+            {
+                int index= rand() %len;
+                id2+=alpha[index];
+            }
+            id=id1+""+id2;
+        }
+        a.maVe=id;
+        cout<<"Ma ve: " << a.maVe<<endl;
+        break;
+    }
 }
 
 void nhap_1_ve(Ve &a,char movie)
@@ -441,7 +501,7 @@ void nhap_1_ve(Ve &a,char movie)
         else
             cout<<"Sai lua chon, nhap lai: ";
     }
-    randomID(a,ve);
+    randomID(a,ve,movie);
     // ten phim 
     if(ve == '1')
     {
@@ -474,6 +534,20 @@ void khoi_tao(char a[][cot])
 
 }
 
+void xuatS(Ve *a)
+{
+    cout<<"Struct "<<endl;
+    for(int i=0;i<g;i++)
+    {
+        cout<<"Ve "<<i+1 <<" :"<<endl;
+        cout <<"Ten phim: "<<a[i].name<<endl;
+        cout<<"Ma ve: "<< a[i].maVe<<endl;
+        cout<<"Gia: "<< a[i].pricel<<endl;
+        cout<<endl;
+
+    }
+}
+
 int main()
 {
     char choose;
@@ -491,7 +565,7 @@ int main()
     khoi_tao(P1);
     khoi_tao(P2);
     khoi_tao(P3);
-    
+    manhinh:
     do
     {
         menu();
@@ -514,20 +588,22 @@ int main()
             getch();
             system("cls");
             break;
-            
+            // ----------------------------------------------------------------------
             case '2':
+            room:
             cout<<"PHONG VE"<<endl;
-            cout<<"-------------------------------------"<<endl;
-            cout<<"| 1. Conan                          |"<<endl;
-            cout<<"| 2. Doremon                        |"<<endl;
-            cout<<"| 3. Shin                           |"<<endl;
-            cout<<"-------------------------------------"<<endl;
+            cout<<"                       -------------------------------------"<<endl;
+            cout<<"                       | 1. Conan                          |"<<endl;
+            cout<<"                       | 2. Doremon                        |"<<endl;
+            cout<<"                       | 3. Shin                           |"<<endl;
+            cout<<"                       | 4. EXIT                           |"<<endl;
+            cout<<"                       -------------------------------------"<<endl;
             char choose1;
             cout<<"Choose: ";
             while(true)
             {
                 cin >> choose1;
-                if(choose1 > '0' && choose <= '3') break;
+                if(choose1 > '0' && choose <= '4') break;
                 else
                     cout<<"Nhap sai lua chon, nhap lai: ";
             }
@@ -539,6 +615,8 @@ int main()
                 show_array(P1);
                 cout<<endl;
                 cout<<"-> Nhan enter de ve man hinh: "; 
+                getch();
+                system("cls");
                 break;
                 case '2':
                 cout<<"PHONG VE PHIM DOREMON"<<endl<<endl;
@@ -556,8 +634,12 @@ int main()
                 getch();
                 system("cls");
                 break;
+                case '4':
+                system("cls");
+                goto  manhinh;
             }
-            break;
+            goto room;
+            // -----------------------------------------------------------------
             case '3':
                 cout<<"Chua lam"<<endl;
                 cout<<"-> Nhan enter de ve man hinh: "; 
@@ -584,4 +666,4 @@ int main()
 
     }while(true);
     return 0;
-}
+    }

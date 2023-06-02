@@ -6,6 +6,7 @@
 #include<cstdlib>
 #include<random>
 #include<ctime>
+#include<iomanip>
 const int dong=10;
 const int cot=9;
 const int so_lan=4;
@@ -27,10 +28,13 @@ struct Ve
 };
 
 void show_array(char a[][cot]);
-void ve_movie(Ve *&a,Ve *&b, Ve *&d, char P1[][cot], char P2[][cot], char P3[][cot], bool flag);
-void nhap_1_ve(Ve &a,char movie);
+void ve_movie(Ve *&a,Ve *&b, Ve *&d, char P1[][cot], char P2[][cot], char P3[][cot], bool flag, int &dem, int &dem1, int &dem2);
+void nhap_1_ve(Ve &a,char movie, char P1[][cot]);
 void randomID(Ve &a, char ve);
 void khoi_tao(char a[][cot]);
+void ticket_information(Ve *a, Ve *b, Ve *c);
+void check(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v);
+void xuatS(Ve *a, int n);
 void show_array(char a[][cot])
 {
     cout<<"BANG DAT VE"<<endl;
@@ -42,7 +46,7 @@ void show_array(char a[][cot])
     }
 }
 
-void ve_movie(Ve *&a,Ve *&b, Ve *&d, char P1[][cot], char P2[][cot], char P3[][cot], bool flag)
+void ve_movie(Ve *&a,Ve *&b, Ve *&d, char P1[][cot], char P2[][cot], char P3[][cot], bool flag,int &dem, int &dem1, int &dem2)
 {
     if(flag == false)
     {
@@ -56,10 +60,7 @@ void ve_movie(Ve *&a,Ve *&b, Ve *&d, char P1[][cot], char P2[][cot], char P3[][c
             cout<<"Vuot qua so lan gioi han la 4, moi nhap lai: ";
     }
     system("cls");
-        int dem=0;
-        int dem1=0;
-        int dem2=0;
-        char movie;
+    char movie;
     for(int i=0;i<choose;i++)
     {
         cout<<"Ve thu "<<i+1<<endl<<"---------------------------------"<<endl<<endl;
@@ -79,296 +80,15 @@ void ve_movie(Ve *&a,Ve *&b, Ve *&d, char P1[][cot], char P2[][cot], char P3[][c
         {
         case '1': // Conan
             show_array(P1);
-            nhap_1_ve(a[dem++],movie);
-            datlai:
-            int h,c;
-            cout<<"Nhap so hang: ";
-            while(true)
-            {
-                cin >> h;
-                if(h> 0 && h<= dong) break;
-                else
-                    cout<<"Nhap qua so dong, nhap lai: ";
-            }
-            cout<<"Nhap cot: ";
-            while(true)
-            {
-                cin >> c;
-                if(c> 0 && c<= cot) break;
-                else
-                    cout<<"Nhap qua so cot, nhap lai: ";
-            }
-            cout<<endl;
-            if(P1[h][c] == 'X')
-            {
-                
-                cout<<"Da co nguoi dat, moi dat lai"<<endl;
-                cout<<"-> Nhan enter de dat lai: ";
-                getch();  
-                system("cls");  
-                goto datlai; 
-            }
-            else 
-            {
-                P1[h][c]='X';
-                cout<<"Dat ve thanh cong"<<endl;
-            }
-            system("cls");
+            nhap_1_ve(a[dem++],movie,P1);
             break;
         case '2':
             show_array(P2);
-            nhap_1_ve(b[dem1++],movie);
-            datlai1:
-            int h1,c1;
-            cout<<"Nhap so hang: ";
-            while(true)
-            {
-                cin >> h1;
-                if(h1> 0 && h1<= dong) break;
-                else
-                    cout<<"Nhap qua so dong, nhap lai: ";
-            }
-            cout<<"Nhap cot: ";
-            while(true)
-            {
-                cin >> c1;
-                if(c1> 0 && c1<= cot) break;
-                else
-                    cout<<"Nhap qua so cot, nhap lai: ";
-            }
-            cout<<endl;
-            if(P2[h1][c1] == 'X')
-            {
-                
-                cout<<"Da co nguoi dat, moi dat lai"<<endl;
-                cout<<"-> Nhan enter de dat lai: ";
-                getch();  
-                system("cls");  
-                goto datlai1; 
-            }
-            else 
-            {
-                P2[h1][c1]='X';
-                cout<<"Dat ve thanh cong"<<endl;
-            }
-            system("cls");
+            nhap_1_ve(b[dem1++],movie,P2);
             break;
         case '3':
             show_array(P3);
-            nhap_1_ve(d[dem2++], movie);
-            datlai2:
-            int h2,C2;
-            cout<<"Nhap so hang: ";
-            while(true)
-            {
-                cin >> h2;
-                if(h2> 0 && h2<= dong) break;
-                else
-                    cout<<"Nhap qua so dong, nhap lai: ";
-            }
-            cout<<"Nhap cot: ";
-            while(true)
-            {
-                cin >> C2;
-                if(C2> 0 && C2<= cot) break;
-                else
-                    cout<<"Nhap qua so cot, nhap lai: ";
-            }
-            cout<<endl;
-            if(P3[h2][C2] == 'X')
-            {
-                
-                cout<<"Da co nguoi dat, moi dat lai"<<endl;
-                cout<<"-> Nhan enter de dat lai: ";
-                getch();  
-                system("cls");  
-                goto datlai2; 
-            }
-            else 
-            {
-                P3[h2][C2]='X';
-                cout<<"Dat ve thanh cong"<<endl;
-            }
-            system("cls");
-            break;
-        }
-        cout<<"-----------------------------------"<<endl;
-    }
-    }
-    else
-    {
-    int choose;
-    cout<<"Nhap so luong ve can mua: ";
-    while(true)
-    {
-        cin>> choose;
-        if(choose > 0 && choose <=so_lan) break;
-        else
-            cout<<"Vuot qua so lan gioi han la 4, moi nhap lai: ";
-    }
-    
-    // ---------------------------------------
-    int dem=0;
-    int dem1=0;
-    int dem2=0;
-    char movie;
-    for(int i=0;i<dong;i++)
-    {
-        for(int j=0;j<cot;j++)
-        {
-            if(P1[i][j] == 'X') dem++;
-        }
-    }
-
-    for(int i=0;i<dong;i++)
-    {
-        for(int j=0;j<cot;j++)
-        {
-            if(P2[i][j] == 'X') dem1++;
-        }
-    }
-
-    for(int i=0;i<dong;i++)
-    {
-        for(int j=0;j<cot;j++)
-        {
-            if(P3[i][j] == 'X') dem2++;
-        }
-    }
-    // ------------------------------------------------------
-
-    for(int i=0;i<choose;i++)
-    {
-        cout<<"Ve thu "<<i+1<<endl<<"---------------------------------"<<endl;
-        cout<<"Ten phim: "<<endl;
-        cout<<"---------------------------------------------"<<endl;
-        cout<<"| 1.Conan    2. Doremon      3. Shin        |"<<endl;
-        cout<<"---------------------------------------------"<<endl;
-        cout<<"Choose: "; 
-        while(true)
-        {
-            cin >> movie;
-            if(movie > '0' && movie <= '3') break;
-            else
-                cout<<"Khong co loai phim nay, moi nhap lai: ";
-         }
-          switch(movie)
-        {
-        case '1': // Conan
-            // so bang ghe phim conan
-            show_array(P1);
-            nhap_1_ve(a[dem++],movie);
-            datlai3:
-
-            int h,c;
-            cout<<"Nhap so hang: ";
-            while(true)
-            {
-                cin >> h;
-                if(h> 0 && h<= dong) break;
-                else
-                    cout<<"Nhap qua so dong, nhap lai: ";
-            }
-            cout<<"Nhap cot: ";
-            while(true)
-            {
-                cin >> c;
-                if(c> 0 && c<= cot) break;
-                else
-                    cout<<"Nhap qua so cot, nhap lai: ";
-            }
-            cout<<endl;
-            if(P1[h][c] == 'X')
-            {
-                
-                cout<<"Da co nguoi dat, moi dat lai"<<endl;
-                cout<<"-> Nhan enter de dat lai: ";
-                getch();  
-                system("cls");  
-                goto datlai3; 
-            }
-            else 
-            {
-                P1[h][c]='X';
-                cout<<"Dat ve thanh cong"<<endl;
-            }
-            system("cls");
-            break;
-        case '2':
-            show_array(P2);
-            nhap_1_ve(b[dem1++],movie);
-            datlai4:
-            int h1,c1;
-            cout<<"Nhap so hang: ";
-            while(true)
-            {
-                cin >> h1;
-                if(h1> 0 && h1<= dong) break;
-                else
-                    cout<<"Nhap qua so dong, nhap lai: ";
-            }
-            cout<<"Nhap cot: ";
-            while(true)
-            {
-                cin >> c1;
-                if(c1> 0 && c1<= cot) break;
-                else
-                    cout<<"Nhap qua so cot, nhap lai: ";
-            }
-            cout<<endl;
-            if(P2[h1][c1] == 'X')
-            {
-                
-                cout<<"Da co nguoi dat, moi dat lai"<<endl;
-                cout<<"-> Nhan enter de dat lai: ";
-                getch();  
-                system("cls");  
-                goto datlai4; 
-            }
-            else 
-            {
-                P2[h1][c1]='X';
-                cout<<"Dat ve thanh cong"<<endl;
-            }
-            system("cls");
-            break;
-        case '3':
-            show_array(P3);
-            nhap_1_ve(d[dem2++], movie);
-            datlai5:
-            int h2,C2;
-            cout<<"Nhap so hang: ";
-            while(true)
-            {
-                cin >> h2;
-                if(h2 > 0 && h2 <= dong) break;
-                else
-                    cout<<"Nhap qua so dong, nhap lai: ";
-            }
-            cout<<"Nhap cot: ";
-            while(true)
-            {
-                cin >> C2;
-                if(C2> 0 && C2<= cot) break;
-                else
-                    cout<<"Nhap qua so cot, nhap lai: ";
-            }
-            cout<<endl;
-            if(P3[h2][C2] == 'X')
-            {
-                
-                cout<<"Da co nguoi dat, moi dat lai"<<endl;
-                cout<<"-> Nhan enter de dat lai: ";
-                getch();  
-                system("cls");  
-                goto datlai5; 
-            }
-            else 
-            {
-                P3[h2][C2]='X';
-                cout<<"Dat ve thanh cong"<<endl;
-            }
-            system("cls");
+            nhap_1_ve(d[dem2++], movie,P3);
             break;
         }
         cout<<"-----------------------------------"<<endl;
@@ -469,7 +189,7 @@ void randomID(Ve &a, char ve, char movie)
     }
 }
 
-void nhap_1_ve(Ve &a,char movie)
+void nhap_1_ve(Ve &a,char movie, char P1[][cot])
 {
     
     switch(movie)
@@ -503,6 +223,45 @@ void nhap_1_ve(Ve &a,char movie)
     }
     randomID(a,ve,movie);
     // ten phim 
+    // --------------------
+    datlai:
+            int h,c;
+            cout<<"Nhap so hang: ";
+            while(true)
+            {
+                cin >> h;
+                if(h> 0 && h<= dong) break;
+                else
+                    cout<<"Nhap qua so dong, nhap lai: ";
+            }
+            cout<<"Nhap cot: ";
+            while(true)
+            {
+                cin >> c;
+                if(c> 0 && c<= cot) break;
+                else
+                    cout<<"Nhap qua so cot, nhap lai: ";
+            }
+            cout<<endl;
+            if(P1[h][c] == 'X')
+            {
+                
+                cout<<"Da co nguoi dat, moi dat lai"<<endl;
+                cout<<"-> Nhan enter de dat lai: ";
+                getch();  
+                system("cls");  
+                goto datlai; 
+            }
+            else 
+            {
+                P1[h][c]='X';
+                string k = to_string(h) +""+to_string(c);
+                a.number_char = k;
+                cout<<"Dat ve thanh cong"<<endl;
+                getch();
+            }
+            system("cls");
+    // --------------------
     if(ve == '1')
     {
         a.pricel=130.000;
@@ -520,9 +279,10 @@ void menu()
     cout<<"                                  | 1. Dat ve xem phim                          |"<<endl;
     cout<<"                                  | 2. Xem phong ve                             |"<<endl;
     cout<<"                                  | 3. Thanh toan                               |"<<endl;
-    cout<<"                                  | 4. Tim kiem ve                              |"<<endl;
-    cout<<"                                  | 5. Huy ve                                   |"<<endl;
-    cout<<"                                  | 6. EXIT                                     |"<<endl;
+    cout<<"                                  | 4. Thong tin ve                             |"<<endl;
+    cout<<"                                  | 5. Tim kiem ve                              |"<<endl;
+    cout<<"                                  | 6. Huy ve                                   |"<<endl;
+    cout<<"                                  | 7. EXIT                                     |"<<endl;
     cout<<"                                  ==============================================="<<endl;
 }
 
@@ -534,19 +294,54 @@ void khoi_tao(char a[][cot])
 
 }
 
-void xuatS(Ve *a)
-{
-    cout<<"Struct "<<endl;
-    for(int i=0;i<g;i++)
-    {
-        cout<<"Ve "<<i+1 <<" :"<<endl;
-        cout <<"Ten phim: "<<a[i].name<<endl;
-        cout<<"Ma ve: "<< a[i].maVe<<endl;
-        cout<<"Gia: "<< a[i].pricel<<endl;
-        cout<<endl;
 
+// thong tin ve
+// --------------------------------------------------------------
+void xuatS(Ve *a, int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        cout<<setw(20)<<left<<a[i].name<<" ";
+        cout<<setw(17)<<left<<a[i].maVe<<" ";
+        cout<<setw(17)<<left<<a[i].number_char<<" ";
+        cout<<setw(10)<<left<<a[i].name<<" ";
+        cout<<endl;
     }
 }
+
+void check(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v)
+{
+    for(int i=0;i<g;i++)
+    {
+        if(a[i].name == "") break;
+        n++;
+    }
+
+    for(int i=0;i<g;i++)
+    {
+        if(b[i].name == "") break;
+        m++;
+    }
+    for(int i=0;i<g;i++)
+    {
+        if(c[i].name == "") break;
+        v++;
+    }
+}
+
+void ticket_information(Ve *a, Ve *b, Ve *c)
+{
+    int n=0,m=0,v=0;
+    check(a,b,c,n,m,v);
+    // table ticket
+    // name ticket       code ticket               number char       pricel
+    cout<< setw(20) << left <<"Name Ticket"<<" "<<setw(17)<<left<<"Code ticket"<<" "<<setw(17)<<left<<"Number char"<<" "<<setw(10)<<left<<"Pricel"<<endl;
+    xuatS(a,n);
+    xuatS(b,m);
+    xuatS(c,v);
+}   
+// --------------------------------------------------------------
+
 
 int main()
 {
@@ -561,6 +356,9 @@ int main()
     char P2[dong][cot];
     char P3[dong][cot];
     bool flag = false;
+    int dem=0;
+    int dem1=0;
+    int dem2=0;
     // tao phong
     khoi_tao(P1);
     khoi_tao(P2);
@@ -573,7 +371,7 @@ int main()
         while(true)
         {
             cin>> choose;
-            if(choose > '0' && choose <='6') break;
+            if(choose > '0' && choose <='7') break;
             else
                 cout<<"Nhap sai lua chon, nhap lai: ";
         }
@@ -583,7 +381,7 @@ int main()
             case '1':
             cout<<"DAT VE"<<endl;
             cout<<endl;
-            ve_movie(a,b,d,P1,P2,P3,flag);
+            ve_movie(a,b,d,P1,P2,P3,flag,dem, dem1, dem2);
             cout<<"-> Nhan enter de ve man hinh: "; 
             getch();
             system("cls");
@@ -646,7 +444,8 @@ int main()
             
                 break;
             case '4':
-                cout<<"Chua lam"<<endl;
+                cout<<"                      TICKET INFORMATION                 "<<endl;
+                ticket_information(a,b,d);
                 cout<<"-> Nhan enter de ve man hinh: "; 
                 break;
             case '5':
@@ -654,6 +453,10 @@ int main()
                 cout<<"-> Nhan enter de ve man hinh: "; 
                 break;
             case '6':
+                cout<<"Chua lam"<<endl;
+                cout<<"-> Nhan enter de ve man hinh: "; 
+                break;
+            case '7':
                 delete[]a;
                 delete[]b;
                 delete[]d;

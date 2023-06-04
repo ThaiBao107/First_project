@@ -35,13 +35,17 @@ void khoi_tao(char a[][cot]);
 void ticket_information(Ve *a, Ve *b, Ve *c);
 void check(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v);
 void xuatS(Ve *a, int n);
+void save_data(Ve *a, Ve *b, Ve*c);
 void show_array(char a[][cot])
 {
+    int k=3;
     cout<<"BANG DAT VE"<<endl;
     cout<<endl;
+    cout<<"   "<<setw(k)<< left <<"1"<<" "<<setw(k)<< left <<"2"<<" "<<setw(k)<< left <<"3"<<" "<<setw(k)<< left <<"4"<<" "<<setw(k)<< left <<"5"<<" "<<setw(k)<< left <<"6"<<" "<<setw(k)<< left <<"7"<<" " <<setw(k)<< left <<"8"<<" "<<setw(k)<< left <<"9"<<" "<<endl;
     for(int i=0;i<dong;i++){
+        cout<<char(i+65)<<"  ";
         for(int j=0;j<cot;j++)
-            cout<<a[i][j]<<" ";
+            cout<<setw(3)<< left <<a[i][j]<<" ";
         cout<<endl;
     }
 }
@@ -75,7 +79,8 @@ void ve_movie(Ve *&a,Ve *&b, Ve *&d, char P1[][cot], char P2[][cot], char P3[][c
             if(movie > '0' && movie <= '3') break;
             else
                 cout<<"Khong co loai phim nay, moi nhap lai: ";
-         }
+        }
+        system("cls");
           switch(movie)
         {
         case '1': // Conan
@@ -225,15 +230,21 @@ void nhap_1_ve(Ve &a,char movie, char P1[][cot])
     // ten phim 
     // --------------------
     datlai:
-            int h,c;
-            cout<<"Nhap so hang: ";
+            if(ve == '1')
+            {
+            char h[]="";
+            int c;
+            cout<<"Nhap hang: ";
             while(true)
             {
                 cin >> h;
-                if(h> 0 && h<= dong) break;
+                if(h[0] == 65 || h[0] == 66) break;
                 else
-                    cout<<"Nhap qua so dong, nhap lai: ";
+                    cout<<"Nhap so dong khong phu hop voi loai ve, nhap lai: ";
             }
+            int h1=int(h[0]) - 65;
+            // --------------------------------------------------------
+
             cout<<"Nhap cot: ";
             while(true)
             {
@@ -243,7 +254,7 @@ void nhap_1_ve(Ve &a,char movie, char P1[][cot])
                     cout<<"Nhap qua so cot, nhap lai: ";
             }
             cout<<endl;
-            if(P1[h][c] == 'X')
+            if(P1[h1][c-1] == 'X')
             {
                 
                 cout<<"Da co nguoi dat, moi dat lai"<<endl;
@@ -254,11 +265,57 @@ void nhap_1_ve(Ve &a,char movie, char P1[][cot])
             }
             else 
             {
-                P1[h][c]='X';
-                string k = to_string(h) +""+to_string(c);
+                P1[h1][c-1]='X';
+                string str(h);
+                string k = str +""+to_string(c);
                 a.number_char = k;
                 cout<<"Dat ve thanh cong"<<endl;
                 getch();
+            }
+            }
+            // ------------------------------------------------
+            else
+            {
+            char h[]="";
+            int c;
+            cout<<"Nhap hang: ";
+            while(true)
+            {
+                cin >> h;
+                if(h[0] > 66  && h[0] <= 74) break;
+                else
+                    cout<<"Nhap so dong khong phu hop voi loai ve, nhap lai: ";
+            }
+            int h1=int(h[0]) - 65;
+            // --------------------------------------------------------
+
+            cout<<"Nhap cot: ";
+            while(true)
+            {
+                cin >> c;
+                if(c> 0 && c<= cot) break;
+                else
+                    cout<<"Nhap qua so cot, nhap lai: ";
+            }
+            cout<<endl;
+            if(P1[h1][c-1] == 'X')
+            {
+                
+                cout<<"Da co nguoi dat, moi dat lai"<<endl;
+                cout<<"-> Nhan enter de dat lai: ";
+                getch();  
+                system("cls");  
+                goto datlai; 
+            }
+            else 
+            {
+                P1[h1][c-1]='X';
+                string str(h);
+                string k = str +""+to_string(c);
+                a.number_char = k;
+                cout<<"Dat ve thanh cong"<<endl;
+                getch();
+            }
             }
             system("cls");
     // --------------------
@@ -343,6 +400,39 @@ void ticket_information(Ve *a, Ve *b, Ve *c)
 // --------------------------------------------------------------
 
 
+// --------------------------------------------------------------
+// save data
+void save_data(Ve *a, Ve *b, Ve*c)
+{
+    int n=0,m=0,v=0;
+    check(a,b,c,n,m,v);
+    ofstream outF;
+    outF.open("data_project.txt",ios_base::app);
+    if(outF.is_open())
+    {
+        for(int i=0;i<n;i++)
+        {
+            outF<<a[i].maVe<<'#'<<a[i].name<<'#'<<a[i].number_char<<'#'<<a[i].pricel<<endl;
+        }
+
+        for(int i=0;i<m;i++)
+        {
+            outF<<b[i].maVe<<'#'<<b[i].name<<'#'<<b[i].number_char<<'#'<<b[i].pricel<<endl;
+        }
+
+        for(int i=0;i<v;i++)
+        {
+            outF<<c[i].maVe<<'#'<<c[i].name<<'#'<<c[i].number_char<<'#'<<c[i].pricel<<endl;
+        }
+
+        outF.close();
+    }
+    else
+        cout<<"Don't open the file"<<endl;
+
+}
+// --------------------------------------------------------------
+
 int main()
 {
     char choose;
@@ -382,6 +472,7 @@ int main()
             cout<<"DAT VE"<<endl;
             cout<<endl;
             ve_movie(a,b,d,P1,P2,P3,flag,dem, dem1, dem2);
+            save_data(a,b,d);
             cout<<"-> Nhan enter de ve man hinh: "; 
             getch();
             system("cls");

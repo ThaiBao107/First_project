@@ -7,6 +7,7 @@
 #include<random>
 #include<ctime>
 #include<iomanip>
+
 const int dong=10;
 const int cot=9;
 const int so_lan=4;
@@ -36,6 +37,7 @@ void ticket_information(Ve *a, Ve *b, Ve *c);
 void check(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v);
 void xuatS(Ve *a, int n);
 void save_data(Ve *a, Ve *b, Ve*c);
+void read_data(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v);
 void show_array(char a[][cot])
 {
     int k=3;
@@ -401,6 +403,7 @@ void ticket_information(Ve *a, Ve *b, Ve *c)
 
 
 // --------------------------------------------------------------
+// data
 // save data
 void save_data(Ve *a, Ve *b, Ve*c)
 {
@@ -431,6 +434,86 @@ void save_data(Ve *a, Ve *b, Ve*c)
         cout<<"Don't open the file"<<endl;
 
 }
+
+int count()
+{
+    int dem=0;
+    ifstream inF;
+    inF.open("data_project.txt",ios_base::in);
+    if(inF.is_open())
+    {
+        string data;
+        while(inF.eof() != true)
+        {
+            inF >> data;
+            dem++;
+        }
+        inF.close();
+        return dem;
+    }
+    else
+        cout<<"Don't open the file"<<endl;
+
+}
+// read data
+void read_data(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v)
+{
+
+    int SL=count();
+    ifstream inF;
+    inF.open("data_project.txt",ios_base::in);
+    if(inF.is_open())
+    {
+            int dem=0;
+            int dem1=0;
+            int dem2=0;
+        for(int i=0;i<SL;i++)
+        {
+            string data;
+            getline(inF,data,'#');
+            if(data == "") break;
+
+            if(data[1] == '1')
+            {
+                a[dem].maVe =data;
+                getline(inF,a[dem].name,'#');
+                getline(inF,a[dem].number_char,'#');
+                inF >> a[dem].pricel;
+                dem++;
+                inF.ignore();
+            }
+
+            else if(data[1] == '2')
+            {
+                a[dem1].maVe =data;
+                getline(inF,a[dem1].name,'#');
+                getline(inF,a[dem1].number_char,'#');
+                inF >> a[dem1].pricel;
+                dem1++;
+                inF.ignore();
+            }
+
+            else if(data[1] == '3')
+            {
+                a[dem2].maVe =data;
+                getline(inF,a[dem2].name,'#');
+                getline(inF,a[dem2].number_char,'#');
+                inF >> a[dem2].pricel;
+                dem2++;
+                inF.ignore();
+            }
+        }
+        inF.close();
+        cout<<"Read data successfully"<<endl;
+
+        n=dem;
+        m=dem1;
+        v=dem2;
+    }
+    else
+        cout<<"Don't open the file"<<endl;
+
+}
 // --------------------------------------------------------------
 
 int main()
@@ -453,9 +536,11 @@ int main()
     khoi_tao(P1);
     khoi_tao(P2);
     khoi_tao(P3);
+    read_data(a,b,d,dem,dem1,dem2);
     manhinh:
     do
     {
+        
         menu();
         cout<<"Choose: "; 
         while(true)

@@ -1,17 +1,13 @@
-#include <iostream>
-#include <string>
+#include<iostream>
+#include<string>
+#include<fstream>
 using namespace std;
+
+
 
 int main()
 {
-    
-    char l[]="";
-    cout<<"Nhap: "; cin >> l;
-    string str(l);
-    cout<< str<<endl;
-    // string h = "a";
-    // string k ="hello";
-    // k.insert(0,h);
-    // cout<< k <<endl;
+    string a ="hello";
+    cout<<a[1]<<endl;
     return 0;
 }

@@ -10,6 +10,7 @@ time
 file
     + luu du lieu (complete), moi lan mo se doc du lieu ra
     + xu ly ticket code khi doc file, de dien du lieu vao mang
+    +can coi lai luc doc file khi chay CT
 
 thanh toan
     + API gui mail khi da thanh toan
@@ -24,4 +25,7 @@ search ticket
 Huy ve
 
 vovher
+
+
+
 

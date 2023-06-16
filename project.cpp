@@ -25,7 +25,7 @@ struct Ve
    string name;
    string maVe;
    string number_char;
-   double pricel;
+   string pricel;
 };
 
 void show_array(char a[][cot]);
@@ -37,7 +37,7 @@ void ticket_information(Ve *a, Ve *b, Ve *c);
 void check(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v);
 void xuatS(Ve *a, int n);
 void save_data(Ve *a, Ve *b, Ve*c);
-void read_data(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v);
+void read_data(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v, char P[][cot], char P1[][cot], char P2[][cot]);
 void show_array(char a[][cot])
 {
     int k=3;
@@ -323,11 +323,11 @@ void nhap_1_ve(Ve &a,char movie, char P1[][cot])
     // --------------------
     if(ve == '1')
     {
-        a.pricel=130.000;
+        a.pricel="130.000";
     }
     else if(ve == '2')
     {
-        a.pricel=90.000;
+        a.pricel="90.000";
     }  
    
 }
@@ -363,7 +363,7 @@ void xuatS(Ve *a, int n)
         cout<<setw(20)<<left<<a[i].name<<" ";
         cout<<setw(17)<<left<<a[i].maVe<<" ";
         cout<<setw(17)<<left<<a[i].number_char<<" ";
-        cout<<setw(10)<<left<<a[i].name<<" ";
+        cout<<setw(10)<<left<<a[i].pricel<<" ";
         cout<<endl;
     }
 }
@@ -394,7 +394,7 @@ void ticket_information(Ve *a, Ve *b, Ve *c)
     check(a,b,c,n,m,v);
     // table ticket
     // name ticket       code ticket               number char       pricel
-    cout<< setw(20) << left <<"Name Ticket"<<" "<<setw(17)<<left<<"Code ticket"<<" "<<setw(17)<<left<<"Number char"<<" "<<setw(10)<<left<<"Pricel"<<endl;
+   cout<< setw(20) << left <<"Name Ticket"<<" "<<setw(17)<<left<<"Code ticket"<<" "<<setw(17)<<left<<"Number char"<<" "<<setw(10)<<left<<"Pricel"<<endl;
     xuatS(a,n);
     xuatS(b,m);
     xuatS(c,v);
@@ -443,7 +443,7 @@ int count()
     if(inF.is_open())
     {
         string data;
-        while(inF.eof() != true)
+        while(getline(inF,data,'#'))
         {
             inF >> data;
             dem++;
@@ -456,28 +456,40 @@ int count()
 
 }
 // read data
-void read_data(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v)
+void read_data(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v, char P[][cot], char P1[][cot], char P2[][cot])
 {
 
     int SL=count();
+    int dem=0;
+    int dem1=0;
+    int dem2=0;
     ifstream inF;
     inF.open("data_project.txt",ios_base::in);
     if(inF.is_open())
     {
-            int dem=0;
-            int dem1=0;
-            int dem2=0;
         for(int i=0;i<SL;i++)
         {
             string data;
             getline(inF,data,'#');
-            if(data == "") break;
-
+            // if(data == "") break;
             if(data[1] == '1')
             {
                 a[dem].maVe =data;
                 getline(inF,a[dem].name,'#');
                 getline(inF,a[dem].number_char,'#');
+                switch(a[dem].maVe[0])
+                {
+                    case 'V':
+                    // char tam = a[dem].number_char[0];
+                    // char tam1 = a[dem].number_char[1];
+                        
+                        P[int(a[dem].number_char[0]) -65][int(a[dem].number_char[1])-49]='X';
+                        break;
+                    case 'N':
+                        P[int(a[dem].number_char[0]) -65][int(a[dem].number_char[1])-49]='X';
+                        break;
+            
+                }
                 inF >> a[dem].pricel;
                 dem++;
                 inF.ignore();
@@ -485,26 +497,51 @@ void read_data(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v)
 
             else if(data[1] == '2')
             {
-                a[dem1].maVe =data;
-                getline(inF,a[dem1].name,'#');
-                getline(inF,a[dem1].number_char,'#');
-                inF >> a[dem1].pricel;
+                b[dem1].maVe =data;
+                getline(inF,b[dem1].name,'#');
+                getline(inF,b[dem1].number_char,'#');
+                switch(b[dem1].maVe[0])
+                {
+                    case 'V':
+                    // char tam = a[dem].number_char[0];
+                    // char tam1 = a[dem].number_char[1];
+                        
+                        P1[int(b[dem1].number_char[0]) -65 ][int(b[dem1].number_char[1])-49]='X';
+                        break;
+                    case 'N':
+                        P1[int(b[dem1].number_char[0]) -65][int(b[dem1].number_char[1])-49]='X';
+                        break;
+            
+                }
+                inF >> b[dem1].pricel;
                 dem1++;
                 inF.ignore();
             }
 
             else if(data[1] == '3')
             {
-                a[dem2].maVe =data;
-                getline(inF,a[dem2].name,'#');
-                getline(inF,a[dem2].number_char,'#');
-                inF >> a[dem2].pricel;
+                c[dem2].maVe =data;
+                getline(inF,c[dem2].name,'#');
+                getline(inF,c[dem2].number_char,'#');
+                switch(c[dem2].maVe[0])
+                {
+                    case 'V':
+                    // char tam = a[dem].number_char[0];
+                    // char tam1 = a[dem].number_char[1];
+                        
+                        P2[int(c[dem2].number_char[0]) - 65][int(c[dem2].number_char[1])-49]='X';
+                        break;
+                    case 'N':
+                        P2[int(c[dem2].number_char[0]) - 65][int(c[dem2].number_char[1])-49]='X';
+                        break;
+            
+                }
+                inF >> c[dem2].pricel;
                 dem2++;
                 inF.ignore();
             }
         }
         inF.close();
-        cout<<"Read data successfully"<<endl;
 
         n=dem;
         m=dem1;
@@ -514,6 +551,8 @@ void read_data(Ve *a, Ve *b, Ve *c, int &n, int &m, int &v)
         cout<<"Don't open the file"<<endl;
 
 }
+
+
 // --------------------------------------------------------------
 
 int main()
@@ -536,7 +575,7 @@ int main()
     khoi_tao(P1);
     khoi_tao(P2);
     khoi_tao(P3);
-    read_data(a,b,d,dem,dem1,dem2);
+    read_data(a,b,d,dem,dem1,dem2,P1,P2,P3);
     manhinh:
     do
     {

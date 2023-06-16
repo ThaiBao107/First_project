@@ -3,11 +3,15 @@
 #include<fstream>
 using namespace std;
 
+struct ve
+{
+    string ma="hello";
 
+};
 
 int main()
 {
-    string a ="hello";
-    cout<<a[1]<<endl;
-    return 0;
+    ve v;
+    cout<<int(v.ma[0]) -32 -1<<endl;
+    return 0;   
 }

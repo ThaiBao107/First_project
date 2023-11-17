@@ -110,11 +110,61 @@ OR (Orders.ShipCountry = 'Argentina' AND Orders.Freight < 5)
 -- 16 rows
 
 --14.Lập danh sách các đơn hàng trong tháng 4/97 gồm các thông tin sau: 
---Order ID, Order Date, Customer, Employee, Freight, New-Freight trong đó New-Freight =110% Freight. 
+--Order ID, Order Date, Customer, Employee, Freight, New-Freight trong đó New-Freight =110% Freight.
 
+SELECT OrderID,OrderDate,CustomerID,EmployeeID,format(Freight * 1.1,'N1') AS Freight
+FROM Orders
+WHERE MONTH(OrderDate) = '4' AND YEAR(OrderDate) = '1997' 
+--31 rows
 
+--15.	Lập danh sách trị giá tồn kho các Product không còn tiếp tục cung cấp nữa (trường 
+--Discontinued là Yes). Danh sách gồm: Product ID, Product Name, Supplier Name, 
+--UnitPrice, 	UintsInStock, 	Total, 	Supplier 	Fax, 	trong 	đó 	Total 	= UnitPrice*UnitsInStock
+
+SELECT ProductID,ProductName,Products.SupplierID ,UnitPrice,UnitsInStock,(UnitPrice*UnitsInStock) AS Total
+FROM Products,Suppliers
+WHERE (Products.SupplierID = Suppliers.SupplierID)
+AND (Products.Discontinued = '1')
+--8 rows
 
 --16.Lập danh sách nhân viên (Table Employee) có hire date từ năm 1993 trở về trước.
 --Danh sách gồm: Name, Hire date, Title, BirthDate, Home Phone, 
---trong đó trường Name ghép từ các trường: TitleOfCourstesy, chữ đầu trường LastName và trường FirstName 
+--trong đó trường Name ghép từ các trường: TitleOfCourstesy, chữ đầu trường LastName và trường FirstName
+
+SELECT (TitleOfCourtesy + '.' + LastName + ' ' + FirstName) AS Name,HireDate,Title,BirthDate,HomePhone
+FROM Employees
+WHERE YEAR(HireDate) <= 1993
+
+
+--17.	Lập danh sách các Order có ngày đặt hàng trong tháng 4 hàng năm.
+--Danh sách gồm: Order ID, Order Date, Customer,
+--Employee trong đó Customer là Company Name của khách hàng, Employee lấy Last Name 
+SELECT OrderId,OrderDate,LastName
+FROM Customers,Orders,Employees
+WHERE Customers.CustomerID =  Orders.CustomerID 
+AND Orders.EmployeeID = Employees.EmployeeID
+AND MONTH(OrderDate) = 4
+
+
+--18.	Lập danh sách các Order có ngày đặt hàng các năm chẳn.
+--Danh sách gồm: Order ID, Order Date, Customer,
+--Employee trong đó Customer là Company Name của khách hàng, Employee lấy Last Name 
+SELECT OrderID,OrderDate,CompanyName,LastName
+FROM Customers,Employees,Orders
+WHERE Customers.CustomerID = orders.CustomerID AND Orders.EmployeeID = Employees.EmployeeID
+AND (Year(OrderDate) % 2 = 0)
+-- 422 rows
+--------------------------------------------------------------------------------------
+--19 111 rows
+-- 105 row
+-------------------------------------------------------------------------------------
+
+--20 --1059 rows
+SELECT O.OrderID,ProductName,O.UnitPrice,Quantity,(O.UnitPrice * Quantity) AS ThanhTien,
+(O.UnitPrice * Quantity * Discount) AS TiemGiamGia, ((O.UnitPrice * Quantity) - (O.UnitPrice * Quantity * Discount))
+FROM Products,[Order Details] AS O, Orders
+WHERE Products.ProductID = O.ProductID
+AND Orders.OrderID = O.OrderID
+AND YEAR(Orders.OrderDate) = 1997
+
 

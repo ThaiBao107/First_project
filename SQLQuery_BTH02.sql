@@ -168,3 +168,38 @@ AND Orders.OrderID = O.OrderID
 AND YEAR(Orders.OrderDate) = 1997
 
 
+
+SELECT [Order Details].OrderID,ProductName,[Order Details].UnitPrice,Quantity,([Order Details].UnitPrice * Quantity) As ThanhTien,
+Discount,([Order Details].UnitPrice*Quantity*Discount) AS TienGiamGia, ([Order Details].UnitPrice*Quantity*(1*Discount)) AS TienPhaiTra
+FROM [Order Details],Products,Orders
+--DK
+
+--22.
+--1 rows
+
+--23.
+-- 8 rows
+
+--24.
+-- 105
+
+--25. 3 rows
+SELECT ProductName
+FROM Products
+WHERE avg(UnitPrice) > 30
+
+-- 24 rows
+--groud by co having
+
+--26
+-- 3 rows
+
+--27
+--groud by categoryName   
+--8 rows
+
+--28
+--86 rows 
+--
+
+

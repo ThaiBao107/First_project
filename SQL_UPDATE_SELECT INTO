@@ -1,0 +1,128 @@
+---SELECT *
+--INTO newtable [IN externaldb]
+--FROM oldtable
+--WHERE condition;
+
+
+--SELECT column1, column2, column3, ...
+--INTO newtable [IN externaldb]
+--FROM oldtable
+--WHERE condition;
+
+
+SELECT * INTO TimKhachHangMy FROM Customers
+
+TRUNCATE TABLE TimKhachHangMy
+
+/*Tạo một query đặt tên là Tim5NhanVienGioi (tìm 5 nhân viên giỏi).
+Khi chạy, query này sẽ tạo ra một table mới có tên 5NhanVienGioi.
+Bảng này liệt kê danh sách 5 nhân viên phụ trách nhiều đơn đặt hàng nhất.
+Các thông tin gồm: mã nhân viên, họ và tên nhân viên (1 cột), tổng số lượng các đơn đặt hàng đã phụ trách. 
+Danh sách sắp xếp giảm dần theo cột tổng số lượng các đơn đặt hàng đã phụ trách.  */
+
+SELECT TOP 5 Employees.EmployeeID AS 'NHAN VIEN ID',LastName + ' ' + FirstName AS 'Ho ten', Count(*) AS 'Tong SL'
+INTO NamNhanVienGioi
+FROM Employees,Orders
+WHERE Employees.EmployeeID = Orders.EmployeeID
+group by Employees.EmployeeID,LastName + ' '+FirstName
+order by 3 DESC  -- DESC giam dan / ASC tang dan
+
+/* 3.	Tạo một query đặt tên là Tim10KhachHang (tìm 10 khách hàng).
+Khi chạy, query này sẽ tạo ra một table mới có tên 10KhachHang. 
+Bảng này liệt kê danh sách 10 khách hàng có nhiều đơn đặt hàng nhất.
+Các thông tin gồm: mã khách hàng, tên công ty, địa chỉ đầy đủ (1 cột gồm địa chỉ, thành phố và quốc gia), và tổng số lượng các đơn đặt hàng đã đặt. 
+Danh sách sắp xếp giảm dần theo cột tổng số lượng các đơn đặt hàng đã đặt. */
+
+
+
+/*	Tạo một query đặt tên là TimTop5QGMuaHang (tìm top 5 quốc gia mua hàng).
+Khi chạy, query này sẽ tạo ra một table mới có tên Top5QGMuaHang.
+Bảng này liệt kê danh sách top 5 quốc gia có khách hàng mua nhiều sản phẩm nhất. Gợi ý:  (Count(ProductID). 
+*/
+
+
+
+/*5.	Tạo một query đặt tên là Tim5QGItMuaHang (tìm 5 quốc gia ít mua hàng).
+Khi chạy, query này sẽ tạo ra một table mới có tên NamQGItMuaHang.
+Bảng này liệt kê danh sách 5 quốc gia có khách hàng mua ít sản phẩm nhất. Gợi ý: (Count(ProductID). */
+
+
+
+--UPDATE QUERY
+
+
+ /*	Hãy tạo một query đặt tên là SuaTenQuocGia1 (sửa tên quốc gia) để khi chạy query này sẽ sửa lại tên
+ quốc gia trong bảng CUSTOMERS: “USA” sửa thành “Mỹ”. 
+Tên các quốc gia khác vẫn giữ nguyên. */
+
+
+SELECT Customers.Country From Customers
+
+UPDATE Customers
+SET Customers.Country = 'My'
+WHERE Customers.Country = 'USA'
+
+
+/*.	Hãy tạo một query đặt tên là SuaTenQuocGia2 (sửa tên quốc gia)
+để khi chạy query này sẽ sửa lại tên quốc gia trong bảng
+CUSTOMERS: “Germany” sửa thành “Đức” và “France” sửa thành “Pháp”. Tên các quốc gia khác vẫn giữ nguyên. */
+
+UPDATE Customers
+SET Customers.Country = 'Duc' WHERE Customers.Country = 'Germany'
+UPDATE Customers SET Customers.Country = 'Phap' WHERE Customers.Country = 'France'
+
+SELECT Country From customers
+
+
+/*	Hãy tạo một query đặt tên là SuaTenQuocGia3 (sửa tên quốc gia) 
+để khi chạy query này sẽ sửa lại tên quốc gia trong 2 bảng CUSTOMERS và
+SUPPLIERS: “Germany” sửa thành “Đức” và “France” sửa thành “Pháp”. Tên các quốc gia khác vẫn giữ nguyên. */
+
+Select * from Suppliers
+
+
+UPDATE Suppliers 
+SET Country = 'Duc'
+WHERE Country = 'Germany' 
+
+
+UPDATE Suppliers 
+SET Country = 'Phap'
+WHERE Country = 'France'
+
+
+/*	Hãy tạo một query đặt tên là SuaTenLoaiSP (sửa tên loại sản phẩm) 
+để khi chạy query này sẽ sửa tên loại sản phẩm trong bảng
+LOAISANPHAM: “Beverages” sửa thành “nước giải khát” và “Condiments” sửa thành “gia vị”.
+Tên các loại sản phẩm khác vẫn giữ nguyên. */
+
+select * from Categories
+UPDATE Categories
+SET CategoryName = 'Nuoc giai khat'
+WHERE CategoryName = 'Beverages' 
+
+UPDATE Categories
+SET CategoryName = 'Gia vi'
+WHERE CategoryName = 'Condiments'
+
+/*	Hãy tạo một query đặt tên là SuaTenLoaiSP (sửa tên loại sản phẩm)
+để khi chạy query này sẽ sửa tên loại sản phẩm trong bảng
+LOAISANPHAM: “Confections” sửa thành “bánh kẹo” và “Seafood” sửa thành “hải sản”. 
+Tên các loại sản phẩm khác vẫn giữ nguyên. */
+
+UPDATE Categories
+SET CategoryName = 'Banh keo'
+WHERE CategoryName = 'Confections'
+
+UPDATE Categories
+SET CategoryName = 'Hai san'
+Where CategoryName = 'Seafood'
+
+/*Hãy tạo một query đặt tên là SuaPostalCode (sửa mã bưu điện)
+để khi chạy query này sẽ sửa mã bưu điện của các khách hàng
+Germany: sửa 2 số đầu thành 18. Mã bưu điện của các khách hàng quốc gia khác giữ nguyên. */
+
+select* from [dbo].[Orders]
+
+UPDATE Orders
+SET left(ShipPostalCode,2) 

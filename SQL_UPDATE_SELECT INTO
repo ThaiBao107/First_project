@@ -126,3 +126,5 @@ select* from [dbo].[Orders]
 
 UPDATE Orders
 SET left(ShipPostalCode,2) 
+
+--CROSS-TAB QUERY _ Tổng hợp các cột lại với nhau, thông kê thông tin đã được xử lý lên bảng .
